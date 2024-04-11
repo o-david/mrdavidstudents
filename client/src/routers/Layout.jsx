@@ -2,7 +2,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-const Layout = () => {
+export const StudentLayout = () => {
   return (
     <div>
       
@@ -10,6 +10,13 @@ const Layout = () => {
         <Outlet />
       </main>
       <p>I am layout</p>
+    </div>
+  );
+};
+export const Layout = () => {
+  return (
+    <div>
+        <Outlet />
     </div>
   );
 };
