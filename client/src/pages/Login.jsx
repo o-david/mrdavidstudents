@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   return (
-    <div className="flex justify-center items-center min-h-screen text-[0.875rem] bg-sec w-full">
+    <div className="flex justify-center items-center min-h-[100dvh] text-[0.875rem] bg-sec w-full">
       <div className="sm:w-[30%] w-full flex text-sec3 flex-col items-center gap-10 bg-pry py-8 rounded-lg">
         <h3 className="text-[2rem]">LOGIN</h3>
         <form className="w-3/5 flex flex-col gap-10 ">
