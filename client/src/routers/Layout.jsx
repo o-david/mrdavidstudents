@@ -9,7 +9,6 @@ export const StudentLayout = () => {
       <main>
         <Outlet />
       </main>
-      <p>I am layout</p>
     </div>
   );
 };
