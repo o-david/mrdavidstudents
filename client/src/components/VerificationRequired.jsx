@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { infoCircle } from "../assets";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
-const VerificationRequired = ({email}) => {
+const VerificationRequired = ({email, setState}) => {
   const [digits, setDigits] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(120);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
@@ -41,18 +41,16 @@ const VerificationRequired = ({email}) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(digits.join(''))
     try{
-      const response = await api.post("user/verifyMail", {"verificationCode": "0644", 
-      "email":email});
-      setEnterCode(true)
+      const response = await api.post("user/verifyMail", {verificationCode: digits.join(''), 
+      email:email});
+      console.log(response)
+      setState("pending")
     } catch (error) {
       console.log(error);
       setErrors(error.response.data.message)
     }
-
-    // Here you can submit the form data to your API
-    console.log('Form submitted:', formData);
-    navigate("../successful/332");
   };
   return (
     <div className=" w-screen h-screen flex flex-col gap-6 bg-[rgba(0,0,0,0.3)] justify-center items-center absolute">

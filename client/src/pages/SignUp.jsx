@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import api from "../utils/api";
 import VerificationRequired from "../components/VerificationRequired";
+import ApprovalPending from "../components/ApprovalPending";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const SignUp = () => {
     confirmPassword: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [enterCode, setEnterCode] = useState(false)
+  const [state, setState] = useState('')
   const [errors, setErrors] = useState('')
 
   const handleInputChange = (e) => {
@@ -24,7 +25,7 @@ const SignUp = () => {
     e.preventDefault();
     try{
       const response = await api.post("user", formData);
-      setEnterCode(true)
+      setState("verify")
     } catch (error) {
       console.log(error);
       setErrors(error.response.data.message)
@@ -125,10 +126,14 @@ const SignUp = () => {
         </form>
       </div>
       {
-        !enterCode 
+        state=="verify" 
         &&
-        <VerificationRequired email={formData.email}/>
-
+        <VerificationRequired email={formData.email} setState={setState}/>
+      }
+      {
+        state=="pending" 
+        &&
+        <ApprovalPending email={formData.email}/>
       }
     </div>
   );
