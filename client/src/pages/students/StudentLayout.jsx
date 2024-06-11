@@ -1,13 +1,16 @@
-import { useNavigation, useLoaderData, useParams, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigation, useLoaderData, useParams, Outlet, Navigate, useNavigate } from 'react-router-dom';
 
 const StudentLayout = () => {
     const navigation = useNavigation();
     const data = useLoaderData();
-    console.log(useParams());
-
+    const Navigate = useNavigate()
     console.log(data);
-    const { token } = useParams();
+    localStorage.setItem('token', data.data.token);
+    useEffect(() => {
+      Navigate('/')
 
+    }, [])
 
   if (navigation.state === 'loading') {
     return <div>Loading...</div>;

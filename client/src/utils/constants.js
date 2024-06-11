@@ -1,4 +1,4 @@
-import { AdminRouter, AppRouter, StudentRouter } from "../routers";
+import { AdminRouter, AppRouter, DevRouter } from "../routers";
 
 export const APPS = [
     {
@@ -12,8 +12,8 @@ export const APPS = [
         main:false
     },
     {
-        subdomain: 'student',
-        app:StudentRouter,
+        subdomain: 'dev',
+        app:DevRouter,
         main:false
     },
 ]

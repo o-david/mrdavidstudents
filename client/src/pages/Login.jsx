@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Input from "../components/Input";
 import { Link } from "react-router-dom";
+import { logo } from "../assets";
+import api from "../utils/api";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -15,12 +20,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await api.post("user", formData);
       `http://student.localhost:5174/${response.token}`
     } catch (error) {
       console.log(error);
       setErrors(error.response.data.message);
+    }finally {
+      setLoading(false);
     }
 
     // Here you can submit the form data to your API
@@ -28,6 +36,12 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center items-center min-h-[100dvh] text-[0.875rem] bg-sec w-full">
+      {
+        loading && <Loader/>
+      }
+    <Link to={'/'} className="absolute top-6 left-6 w-20">
+      <img src={logo} alt="" className="w-full" />
+    </Link>
       <div className="sm:w-[30%] w-full flex text-sec3 flex-col items-center gap-10 bg-pry py-8 rounded-lg shadow-md">
         <h3 className="text-[2rem]">LOGIN</h3>
         <form

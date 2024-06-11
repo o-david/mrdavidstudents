@@ -4,6 +4,8 @@ import Input from "../components/Input";
 import api from "../utils/api";
 import VerificationRequired from "../components/VerificationRequired";
 import ApprovalPending from "../components/ApprovalPending";
+import { logo } from "../assets";
+import Loader from "../components/Loader";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -16,12 +18,14 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [state, setState] = useState('')
   const [errors, setErrors] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     try{
       const response = await api.post("user", formData);
@@ -29,6 +33,8 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
       setErrors(error.response.data.message)
+    }finally{
+      setLoading(false)
     }
 
     // Here you can submit the form data to your API
@@ -38,6 +44,12 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-[100svh] text-[0.875rem] bg-sec w-full">
+      {
+        loading && <Loader/>
+      }
+      <Link to={'/'} className="absolute top-6 left-6 w-20">
+      <img src={logo} alt="" className="w-full" />
+    </Link>
       <div className="sm:w-[30%] w-full flex text-sec3 flex-col items-center gap-10 bg-pry py-8 rounded-lg shadow-md">
         <h3 className="text-[2rem]">BECOME A STUDENT</h3>
         <form onSubmit={handleSubmit} className="w-3/5 flex flex-col gap-10 ">

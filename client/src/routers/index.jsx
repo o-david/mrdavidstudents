@@ -13,6 +13,7 @@ import SignUp from "../pages/SignUp";
 import { useParams, useNavigate } from "react-router-dom";
 import StudentLoader, { dataLoader } from "../pages/students/StudentLoader";
 import StudentLayout from "../pages/students/StudentLayout";
+import Home from "../pages/Home";
 // import { AppHome, AdminHome} from '../pages'
 
 export const AppRouter = () => {
@@ -25,7 +26,7 @@ export const AppRouter = () => {
       path: "/",
       element: <Layout />,
       children: [
-        { index: true, element: <Login /> },
+        { index: true, element: <Home /> },
         { path: "login", element: <Login /> },
         { path: "register", element: <SignUp /> },
         { path: "contact", element: "<Contact />" },
@@ -55,11 +56,11 @@ export const AdminRouter = () => {
     </BrowserRouter>
   );
 };
-export const StudentRouter = () => {
+export const DevRouter = () => {
   
   const router = createBrowserRouter([
     {
-      path: ":token",
+      path: ":token?",
       element: <StudentLayout />,
       errorElement: "error",
       loader: async ({params}) => {
