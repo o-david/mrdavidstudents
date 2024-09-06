@@ -1,17 +1,18 @@
 import React from 'react'
+import { logo } from '../assets'
 
 const Footer = () => {
   return (
     <footer>
       <div id="footer">
         <div id="foot1">
-          <img src={Logo} alt="" /> <h1>Know the Blocks Maven</h1>
+          <img src={logo} alt="" /> <h1>Know the Blocks Maven</h1>
           <p>
             We build educational hub where young adults with special needs can
             have access to information and education about the Blockchain
             Ecosystem.
           </p>
-          <span>
+          {/* <span>
             <IoLogoInstagram />
           </span>
           <span>
@@ -25,7 +26,7 @@ const Footer = () => {
           </span>
           <span>
             <IoLogoLinkedin />
-          </span>
+          </span> */}
         </div>
         <div id="foot2">
           <div className="foot-grp">
@@ -52,20 +53,20 @@ const Footer = () => {
             <h1>CONTACT US</h1>
             <p>
               <span>
-                <IoIosMail />
+                {/* <IoIosMail /> */}
               </span>
               info@knowtheblocksmaven.com.ng
             </p>
 
             <p>
               <span>
-                <FaPhoneAlt />
+                {/* <FaPhoneAlt /> */}
               </span>
               +234-703-5081-460
             </p>
             <p>
               <span>
-                <MdLocationOn />
+                {/* <MdLocationOn /> */}
               </span>
               1, Lokota Street, Wuse Zone 4, Abuja.
             </p>
