@@ -14,6 +14,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import StudentLoader, { dataLoader } from "../pages/students/StudentLoader";
 import StudentLayout from "../pages/students/StudentLayout";
 import Home from "../pages/Home";
+import PageNotFound from "../pages/PageNotFound";
 // import { AppHome, AdminHome} from '../pages'
 
 export const AppRouter = () => {
@@ -31,6 +32,10 @@ export const AppRouter = () => {
         { path: "register", element: <SignUp /> },
         { path: "contact", element: "<Contact />" },
       ],
+    },
+    {
+      path: "*",
+      element: <PageNotFound />,
     },
     {
       path: "/writer",

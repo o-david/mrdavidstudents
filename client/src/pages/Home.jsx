@@ -3,6 +3,7 @@ import HeroSection from '../components/HeroSection';
 import Header from '../components/Header';
 import FeaturedProjects from '../components/FeaturedProjects';
 import FeaturedDevelopers from '../components/FeaturedDevelopers';
+import Footer from '../components/Footer';
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
       <HeroSection/>
       <FeaturedProjects/>
       <FeaturedDevelopers/>
+      <Footer/>
     </div>
   )
 }
