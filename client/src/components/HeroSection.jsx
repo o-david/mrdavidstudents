@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { logo } from '../assets'
 
 const HeroSection = () => {
   return (
-    <section className=" px-6 h-[80vh]  max-h-screen flex items-center  lg:px-8  overflow-hidden">
+    <section className=" px-6 min-h- md:h-[80vh] md:max-h-[1000px] flex items-center  lg:px-8  overflow-hidden">
         
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
