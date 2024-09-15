@@ -1,4 +1,4 @@
-const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4002" : "https://yourdomain.com";
+const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4002" : "https://mrdavidstudents.onrender.com/";
 
 export const VERIFICATION_EMAIL_TEMPLATE = `
 <!DOCTYPE html>
@@ -158,6 +158,64 @@ export const APPROVAL_REQUEST_TEMPLATE = (user) => {
               <a href="${approvalLink}" class="button">Approve</a>
               <a href="${rejectionLink}" class="button" style="background-color: #dc3545;">Reject</a>
               <p>Thank you!</p>
+          </div>
+          <div class="footer">
+              <p>This email was generated automatically. Please do not reply.</p>
+          </div>
+      </body>
+      </html>
+    `;
+  };
+
+  export const generateApplicationStatusEmail = (user, status, password) => {
+    const isSuccess = status === 'accepted';
+    const title = isSuccess ? 'Congratulations!' : 'Application Status';
+    const message = isSuccess 
+      ? `Your application has been approved. Welcome aboard!`
+      : `We regret to inform you that your application has been rejected.`;
+  
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${title}</title>
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+                  margin: 0;
+                  padding: 20px;
+              }
+              .container {
+                  background-color: #ffffff;
+                  padding: 20px;
+                  border-radius: 5px;
+                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              }
+              h1 {
+                  color: ${isSuccess ? '#4CAF50' : '#dc3545'}; /* Green for success, red for failure */
+              }
+              p {
+                  color: #555;
+              }
+              .footer {
+                  margin-top: 20px;
+                  font-size: 12px;
+                  color: #888;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="container">
+              <h1>${title}</h1>
+              <p>${message}</p>
+              <p>${isSuccess ? `You can now log in to your account and start using our services. with the password below` : 'If you have any questions or would like feedback on your application, please feel free to contact our support team.'}</p>
+              ${isSuccess && `<h2>Your Credentials</h2>
+              <p>Email: ${user.email}</p>
+              <p>Password: ${password}</p>`}
+              <p>Best regards,<br>Your App Team</p>
           </div>
           <div class="footer">
               <p>This email was generated automatically. Please do not reply.</p>

@@ -12,6 +12,3 @@ const trp = nodemailer.createTransport({
   });
 const sender = process.env.COMPANY_EMAIL;
 export {trp, sender};
-
-console.log(process.env.COMPANY_EMAIL);
-console.log(process.env.COMPANY_PASSWORD);

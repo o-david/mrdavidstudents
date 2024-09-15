@@ -41,9 +41,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  isVerified: {
-    type: Boolean,
-    default: false,
+  applicationStatus: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
   },
   credentials: {
     type: String, // This could be a token or any other credential type

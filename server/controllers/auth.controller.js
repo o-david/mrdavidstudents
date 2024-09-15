@@ -1,6 +1,7 @@
 import { generatePassword } from "easy_random_password";
 import User from "../models/userModel.js";
-import { sendApprovalRequestEmail } from "../utils/mailsender/emails.js";
+import bcryptjs from "bcryptjs";
+import { sendApplicationStatusEmail, sendApprovalRequestEmail } from "../utils/mailsender/emails.js";
 
 export const signup = async (req, res) => {
 	const { email, firstName,lastName  } = req.body;
@@ -55,16 +56,28 @@ export const approveUserViaLink = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid status. Must be "accepted" or "rejected".' });
     }
 
+    const password = generatePassword(10, {
+      includeNumbers: true,
+      includeAlphabet: true,
+      includeSpecial: true,
+      includelowerCase: true,
+      includeupperCase: true,
+    })
+    const hashedPassword = await bcryptjs.hash(password, 10);
+
+
     // Find the user by ID and update the application status
     const user = await User.findByIdAndUpdate(
       userId,
-      { applicationStatus: status },
+      { applicationStatus: status, password: hashedPassword },
       { new: true }
     );
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found.' });
     }
+
+    await sendApplicationStatusEmail(user, status, password);
 
     res.send(`
       <!DOCTYPE html>

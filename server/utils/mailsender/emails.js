@@ -1,5 +1,5 @@
 import {trp, sender} from './config.js';
-import { APPROVAL_REQUEST_TEMPLATE } from './emailTemplates.js';
+import { APPROVAL_REQUEST_TEMPLATE, generateApplicationStatusEmail } from './emailTemplates.js';
 
 
 const sendApprovalRequestEmail = async(email, user) => {
@@ -20,4 +20,21 @@ const sendApprovalRequestEmail = async(email, user) => {
     
 }
 
-export {sendApprovalRequestEmail};
+const sendApplicationStatusEmail = async (user, status, password) => {
+    const subject = status === 'accepted' ? 'Your Application is Approved' : 'Your Application is Rejected';
+    const mailOptions = {
+      from: sender,
+      to: user.email,
+      subject: subject,
+      html: generateApplicationStatusEmail(user, status, password),
+    };
+  
+    try {
+      await trp.sendMail(mailOptions);
+      console.log('Application status notification email sent successfully.');
+    } catch (error) {
+        throw new Error(`Error sending application status email: ${error}`);
+        }
+  };
+
+export {sendApprovalRequestEmail, sendApplicationStatusEmail};
