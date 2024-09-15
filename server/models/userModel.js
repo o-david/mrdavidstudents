@@ -1,29 +1,74 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-
+import mongoose from "mongoose";
+import { generatePassword } from "easy_random_password";
 
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true },
-  profilePic: { type: String, required: false, default: '' },
-  password: { type: String, required: true },
-  status: { type: String, required: true, default: 'pending'},
-  verificationCode: { type: String, required: false},
-},{
-    timestamps:true
-}
-);
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  profilePicture: {
+    type: String,
+  },
+  userType: {
+    type: String,
+    enum: ["admin", "student"], // Define the possible user types
+    default: "student", // Default user type
+  },
+  bio: {
+    type: String,
+    trim: true,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  credentials: {
+    type: String, // This could be a token or any other credential type
+    default: null,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  resetPasswordToken: String,
+  resetPasswordExpiresAt: Date,
+  verificationToken: String,
+  verificationTokenExpiresAt: Date,
+});
 
-userSchema.methods.matchPassword = async function (enteredPassword){
-  return await bcrypt.compare(enteredPassword, this.password);
-}
+// Middleware to update the updatedAt field before saving
+userSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
+  next();
+});
 
-userSchema.pre("save", async function(next){
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-})
+const User = mongoose.model("User", userSchema);
 
-const User = mongoose.model('Students', userSchema);
 export default User;
-

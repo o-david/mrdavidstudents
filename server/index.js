@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors';
-import {run} from './db.js';
+import {connectDB} from './db/db.js';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 
@@ -9,7 +9,7 @@ dotenv.config()
 
 const app = express();
 const port = process.env.PORT;
-run()
+connectDB()
 
 
 app.use(
@@ -19,13 +19,13 @@ app.use(
 )
 app.use(express.json())
 
-app.use('/user', userRoutes)
+app.use('/api/user', userRoutes)
 
 
 
 
 app.get('/', (req, res) => {
-    res.sendStatus(201)
+    res.send("Hello World")
 })
 
 app.listen(port, function(){
