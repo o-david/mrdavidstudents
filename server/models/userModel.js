@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "student"], // Define the possible user types
     default: "student", // Default user type
   },
+  lastLogin: {
+    type: Date,
+    default: Date.now,
+  },
   bio: {
     type: String,
     trim: true,

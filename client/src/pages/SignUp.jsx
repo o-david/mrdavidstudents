@@ -1,51 +1,44 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
-import api from "../utils/api";
 import VerificationRequired from "../components/VerificationRequired";
 import ApprovalPending from "../components/ApprovalPending";
 import { logo } from "../assets";
 import Loader from "../components/Loader";
+import { useAuthStore } from "../store/authStore";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
-    confirmPassword: "",
   });
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const navigate = useNavigate();
   const [state, setState] = useState('')
-  const [errors, setErrors] = useState('')
-  const [loading, setLoading] = useState(false)
+
+  const { signup, error, isLoading } = useAuthStore();
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   const handleSubmit = async (e) => {
-    setLoading(true)
     e.preventDefault();
-    try{
-      const response = await api.post("user", formData);
-      setState("verify")
-    } catch (error) {
-      console.log(error);
-      setErrors(error.response.data.message)
-    }finally{
-      setLoading(false)
-    }
 
-    // Here you can submit the form data to your API
-    console.log('Form submitted:', formData);
+		try {
+			await signup(formData.email, formData.firstName, formData.lastName);
+			setState("pending");
+		} catch (error) {
+			console.log(error);
+		}
   };
 
 
   return (
     <div className="flex justify-center items-center min-h-[100svh] text-[0.875rem] bg-sec w-full">
       {
-        loading && <Loader/>
+        isLoading && <Loader/>
       }
       <Link to={'/'} className="absolute top-6 left-6 w-20">
       <img src={logo} alt="" className="w-full" />
@@ -74,28 +67,14 @@ const SignUp = () => {
             value={formData.email}
             onChange={handleInputChange}
           />
-          <Input
-            placeholder="Password"
-            type={"password"}
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-          <Input
-            placeholder="Confirm Password"
-            type={"password"}
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-          />
           <div className="flex flex-col gap-4 items-center">
             <button className="border border-sec3 rounded-lg py-2 transition-all hover:bg-sec3 hover:text-white w-full">
               Get Started
             </button>
             {
-              errors && (
+              error && (
                 <p className="text-red-500 text-center">
-                  {errors}
+                  {error}
                 </p>
               )
             }
