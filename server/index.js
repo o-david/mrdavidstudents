@@ -14,7 +14,7 @@ connectDB()
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: ['http://localhost:5173', 'https://www.mrdavidstudents.com.ng', 'https://mrdavidstudents.com.ng', 'https://student.mrdavidstudents.com.ng'],
         credentials: true
     })
 )

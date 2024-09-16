@@ -2,7 +2,8 @@ import { create } from "zustand";
 import axios from "axios";
 
 
-const API_URL = "http://localhost:4002/api/user"
+// const API_URL = "http://localhost:4002/api/user"
+const API_URL = "https://mrdavidstudents.onrender.com/api/user"
 
 axios.defaults.withCredentials = true;
 

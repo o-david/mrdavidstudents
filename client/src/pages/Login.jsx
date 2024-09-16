@@ -10,7 +10,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState("");
+  const [error, setErrors] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
@@ -68,6 +68,13 @@ const Login = () => {
               Login
             </button>
             <div className="h-[1px] w-4/5 bg-sec3"></div>
+            {
+              error && (
+                <p className="text-red-500 text-center">
+                  {error}
+                </p>
+              )
+            }
 
             <div className="flex rounded-lg border hover:text-white hover:bg-sec3 border-sec3 py-2 items-center justify-center w-full">
               <svg
