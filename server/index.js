@@ -14,14 +14,13 @@ connectDB()
 
 app.use(
     cors({
-        origin: ['http://localhost:5173', 'https://www.mrdavidstudents.com.ng', 'https://mrdavidstudents.com.ng', 'https://student.mrdavidstudents.com.ng'],
+        origin: ['http://localhost:5173', 'https://www.mrdavidstudents.com.ng', 'https://mrdavidstudents.com.ng', 'https://dev.mrdavidstudents.com.ng', 'http://dev.localhost:5173'],
         credentials: true
     })
 )
 app.use(express.json())
 
 app.use('/api/user', userRoutes)
-
 
 
 

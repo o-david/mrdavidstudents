@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import VerificationRequired from "../components/VerificationRequired";
 import ApprovalPending from "../components/ApprovalPending";
@@ -13,7 +13,6 @@ const SignUp = () => {
     lastName: "",
     email: "",
   });
-  const navigate = useNavigate();
   const [state, setState] = useState('')
 
   const { signup, error, isLoading } = useAuthStore();

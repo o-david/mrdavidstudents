@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import Input from "../components/Input";
 import { Link } from "react-router-dom";
 import { logo } from "../assets";
-import api from "../utils/api";
 import Loader from "../components/Loader";
-
+import { useAuthStore } from "../store/authStore";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setErrors] = useState("");
-  const [loading, setLoading] = useState(false);
 
+  console.log(process.env.NODE_ENV)
+
+  const { login, error, isLoading, token } = useAuthStore();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -20,24 +22,19 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await api.post("user", formData);
-      `http://student.localhost:5174/${response.token}`
-    } catch (error) {
-      console.log(error);
-      setErrors(error.response.data.message);
-    }finally {
-      setLoading(false);
-    }
-
-    // Here you can submit the form data to your API
-    console.log("Form submitted:", formData);
+    console.log(token)
+		try {
+			await login(formData.email, formData.password);
+      console.log(token)
+      window.location.href ='http://dev.localhost:5173/?token='+token
+		} catch (error) {
+			console.log(error);
+		}
   };
   return (
     <div className="flex justify-center items-center min-h-[100dvh] text-[0.875rem] bg-sec w-full">
       {
-        loading && <Loader/>
+        isLoading && <Loader/>
       }
     <Link to={'/'} className="absolute top-6 left-6 w-20">
       <img src={logo} alt="" className="w-full" />
