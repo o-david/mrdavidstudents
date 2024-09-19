@@ -63,15 +63,19 @@ export const useAuthStore = create((set) => ({
   },
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
+    console.log("i am here: checkAuth store");
     try {
       const response = await axios.get(`${API_URL}/check-auth`);
+      console.log("i have checked");
       set({
         user: response.data.user,
         isAuthenticated: true,
         isCheckingAuth: false,
+        cookieExists: true,
       });
-    } catch (error) {
-      set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+    } catch (err) {
+      console.log(err);
+      set({ error: null, isCheckingAuth: false, isAuthenticated: false, cookieExists: false });
     }
   },
   setCookie: async (token) => {
@@ -81,6 +85,7 @@ export const useAuthStore = create((set) => ({
       await axios.post(`${API_URL}/set-cookie`, {
         token,
       });
+      console.log("success");
       set({ cookieExists: true, isLoading: false, error: null });
     } catch (err) {
       set({ isLoading: false, cookieExists: false, cookieError: err });

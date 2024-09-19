@@ -178,6 +178,7 @@ export const addCookie = async (req, res) => {
 };
 export const checkAuth = async (req, res) => {
 	try {
+    console.log("i am here: checkAuth controller", req.userId);
 		const user = await User.findById(req.userId).select("-password");
 		if (!user) {
 			return res.status(400).json({ success: false, message: "User not found" });
