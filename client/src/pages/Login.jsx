@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logo } from "../assets";
 import Loader from "../components/Loader";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
+import { DEV_URL } from "../constants/urlConstants";
 const Login = () => {
   const navigate = useNavigate()
+  const location = useLocation(); // Get the current location
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const queryParams = new URLSearchParams(location.search);
+  const logout = queryParams.get("logout"); // Check for logout parameter
 
+
+
+  useEffect(() => {
+    if (logout) {
+      localStorage.removeItem("token"); // Clear token on logout
+      console.log("User logged out");
+    }
+    if(localStorage.getItem("token")){
+      window.location.href = DEV_URL
+    }
+  }, [])
   console.log(process.env.NODE_ENV)
 
   const { login, error, isLoading, token } = useAuthStore();
@@ -22,11 +37,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(token)
 		try {
-			await login(formData.email, formData.password);
-      console.log(token)
-      window.location.href ='http://dev.localhost:5173/?token='+token
+			const response = await login(formData.email, formData.password);
+      console.log(response)
+      localStorage.setItem("token", response.token)
+      window.location.href ='http://dev.localhost:5173/?token='+response.token
 		} catch (error) {
 			console.log(error);
 		}

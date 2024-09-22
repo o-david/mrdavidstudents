@@ -3,10 +3,11 @@ import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
 
 const DevLoader = ({ request }) => {
-  const { isAuthenticated, checkAuth } = useAuthStore();
+  const { checkAuth } = useAuthStore();
 
   useEffect(() => {
     const url = new URL(request.url);
+    console.log(url);
 
     const handleAuth = async (token) => {
       await checkAuth(); // Check authentication status

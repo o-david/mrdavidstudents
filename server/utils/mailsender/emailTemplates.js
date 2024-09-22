@@ -1,4 +1,4 @@
-const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4002" : "https://mrdavidstudents.onrender.com/";
+const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4002" : "https://mrdavidstudents.onrender.com";
 
 export const VERIFICATION_EMAIL_TEMPLATE = `
 <!DOCTYPE html>

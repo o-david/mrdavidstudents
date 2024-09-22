@@ -2,7 +2,7 @@ import { generatePassword } from "easy_random_password";
 import User from "../models/userModel.js";
 import bcryptjs from "bcryptjs";
 import { sendApplicationStatusEmail, sendApprovalRequestEmail } from "../utils/mailsender/emails.js";
-import { generateToken, setCookie } from "../utils/generateTokenAndSetCookie.js";
+import { generateToken } from "../utils/generateTokenAndSetCookie.js";
 
 export const signup = async (req, res) => {
 	const { email, firstName,lastName  } = req.body;

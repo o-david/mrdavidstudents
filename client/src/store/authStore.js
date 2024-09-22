@@ -13,7 +13,7 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
   isCheckingAuth: true,
   message: null,
-  // token: localStorage.getItem("token"),
+  token: null,
   cookieExists: false,
   cookieError: false,
 
@@ -57,11 +57,11 @@ export const useAuthStore = create((set) => ({
       });
       set({
         isAuthenticated: true,
-        user: response.data.user,
         token: response.data.token,
         error: null,
         isLoading: false,
       });
+      return response.data
     } catch (error) {
       set({
         error: error.response?.data?.message || "Error logging in",
