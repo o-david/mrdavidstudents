@@ -1,21 +1,30 @@
+import { GEN_URL } from "../../constants/urlConstants";
 import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
 
 const DevLoader = async ({request}) => {
-  const { setCookie, error, checkCookie, cookieExists, cookieError, checkAuth, isAuthenticated} = useAuthStore();
+  const { isAuthenticated, checkAuth} = useAuthStore();
   useEffect( () => {
     const url = new URL(request.url);
-    const token = url.searchParams.get("token")
-    const namerfunc= async () => {
+    const namerfunc= async (token) => {
       await checkAuth()
-      console.log("cookieExists: ", cookieExists) 
-      if(!cookieExists){
-        await setCookie(token)  
+      if(isAuthenticated){
+        await checkAuth(token)  
       }
-      // url.searchParams.delete("token"); // Remove the token parameter
-      // window.history.replaceState({}, document.title, url); // Update the URL without reloading
+      url.searchParams.delete("token"); // Remove the token parameter
+      window.history.replaceState({}, document.title, url); // Update the URL without reloading
     }
-    namerfunc() 
+    let token = localStorage.getItem("token")
+    console.log("token from storage: ", token);
+    if(!token){
+      token = url.searchParams.get("token")
+      console.log("token from search: ", token);
+
+    if (!token) {
+      window.location.href =`${GEN_URL}/login?logout=true`
+    }
+  } 
+  namerfunc(token)
   }, [])  
   return true
   

@@ -141,7 +141,6 @@ export const login = async (req, res) => {
 
 
 		const token = generateToken(user._id);
-    setCookie(res, token)
 
 		user.lastLogin = new Date();
 		await user.save();
@@ -149,36 +148,16 @@ export const login = async (req, res) => {
 		res.status(200).json({
 			success: true,
 			message: "Logged in successfully",
-      token,
-			user: {
-				...user._doc,
-				password: undefined,
-			},
+      token
 		});
 	} catch (error) {
 		console.log("Error in login ", error);
 		res.status(400).json({ success: false, message: error.message });
 	}
 };
-export const addCookie = async (req, res) => {
-	const { token } = req.body;
-	try {
-		if (!token) {
-			return res.status(400).json({ success: false, message: "Invalid token" });
-		}
-		setCookie(res, token)
-		res.status(200).json({
-			success: true,
-			message: "Cookie added successfully",
-		});
-	} catch (error) {
-		console.log("Error in login ", error);
-		res.status(400).json({ success: false, message: error.message });
-	}
-};
+
 export const checkAuth = async (req, res) => {
 	try {
-    console.log("i am here: checkAuth controller", req.userId);
 		const user = await User.findById(req.userId).select("-password");
 		if (!user) {
 			return res.status(400).json({ success: false, message: "User not found" });
