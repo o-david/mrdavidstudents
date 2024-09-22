@@ -1,20 +1,25 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-    console.log("i got here");
-    console.log("req.cookies: ", req.cookies);
-	const token = req.cookies.token;
-	console.log("token: ", token);
-	if (!token) return res.status(401).json({ success: false, message: "Unauthorized - no token provided" });
-	try {
-		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    let token;
 
-		if (!decoded) return res.status(401).json({ success: false, message: "Unauthorized - invalid token" });
+    // Check for Bearer token in the Authorization header
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        token = req.headers.authorization.split(" ")[1];
+    }
 
-		req.userId = decoded.userId;
-		next();
-	} catch (error) {
-		console.log("Error in verifyToken ", error);
-		return res.status(500).json({ success: false, message: "Server error" });
-	}
+    // If no token is found, respond with an error
+    if (!token) {
+        return res.status(401).send("Not authorized, no token");
+    }
+
+    try {
+        // Decode the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.userId = decoded.userId; // Attach userId to the request object
+        next(); // Proceed to the next middleware
+    } catch (error) {
+        console.error("Token verification failed:", error); // Log the error for debugging
+        return res.status(401).send("Not authorized, token failed");
+    }
 };

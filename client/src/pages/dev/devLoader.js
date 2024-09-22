@@ -2,32 +2,38 @@ import { GEN_URL } from "../../constants/urlConstants";
 import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
 
-const DevLoader = async ({request}) => {
-  const { isAuthenticated, checkAuth} = useAuthStore();
-  useEffect( () => {
+const DevLoader = ({ request }) => {
+  const { isAuthenticated, checkAuth } = useAuthStore();
+
+  useEffect(() => {
     const url = new URL(request.url);
-    const namerfunc= async (token) => {
-      await checkAuth()
-      if(isAuthenticated){
-        await checkAuth(token)  
-      }
+
+    const handleAuth = async (token) => {
+      await checkAuth(); // Check authentication status
       url.searchParams.delete("token"); // Remove the token parameter
       window.history.replaceState({}, document.title, url); // Update the URL without reloading
-    }
-    let token = localStorage.getItem("token")
-    console.log("token from storage: ", token);
-    if(!token){
-      token = url.searchParams.get("token")
-      console.log("token from search: ", token);
+    };
+
+    const getToken = () => {
+      let token = localStorage.getItem("token");
+      if (!token) {
+        token = url.searchParams.get("token");
+      }
+      return token;
+    };
+
+    const token = getToken();
 
     if (!token) {
-      window.location.href =`${GEN_URL}/login?logout=true`
+      window.location.href = `${GEN_URL}/login?logout=true`; // Redirect if no token is found
+    } else {
+      localStorage.setItem("token", token); // Store the token in local storage
+      handleAuth(token); // Proceed with the token
     }
-  } 
-  namerfunc(token)
-  }, [])  
-  return true
-  
-}
+  }, []); // Added dependencies for useEffect
 
-export default DevLoader
+  return true;
+};
+
+export default DevLoader;
+

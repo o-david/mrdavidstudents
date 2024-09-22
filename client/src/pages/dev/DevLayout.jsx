@@ -9,38 +9,28 @@ import { useAuthStore } from "../../store/authStore";
 import Loader from "../../components/Loader";
 
 const DevLayout = () => {
-  const { isLoading, checkCookie, cookieExists, error } = useAuthStore();
+  const { isLoading, user } = useAuthStore();
   const navigation = useNavigation();
   // const data = useLoaderData();
   // const url = data.url;
   // const Navigate = useNavigate();
 
-  // const addCookie = async () => {
-  //   try {
-  //     await checkCookie(url);
-  //     console.log("i woorked")
-  //     // window.location.href ='http://dev.localhost:5173/?token='+token
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  console.log(document.cookie);
-
-  // addCookie()
   
 
   if (navigation.state === "loading") {
     return <Loader />;
   }
+  else{
 
-  return isLoading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
-      <p>successfully loaded</p>
+    return isLoading ? (
+      <div>Loading...</div>
+    ) : (
+      <div>
+      <p>Hello {user && user.firstName} {user && user.lastName} </p>
       <Outlet />
     </div>
   );
+}
 };
 
 export default DevLayout;
