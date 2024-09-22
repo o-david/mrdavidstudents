@@ -29,7 +29,7 @@ const Login = () => {
   }, [])
   console.log(process.env.NODE_ENV)
 
-  const { login, error, isLoading, token } = useAuthStore();
+  const { login, error, isLoading } = useAuthStore();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -41,7 +41,7 @@ const Login = () => {
 			const response = await login(formData.email, formData.password);
       console.log(response)
       localStorage.setItem("token", response.token)
-      window.location.href ='http://dev.localhost:5173/?token='+response.token
+      window.location.href =`${DEV_URL}/?token=${response.token}`
 		} catch (error) {
 			console.log(error);
 		}
