@@ -227,3 +227,5 @@ const req = {
 const { name, email, nik } = req.body;
 
 console.log(nik);
+
+

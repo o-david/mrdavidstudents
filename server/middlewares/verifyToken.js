@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
 
 export const verifyToken = (req, res, next) => {
     let token;
@@ -23,3 +24,13 @@ export const verifyToken = (req, res, next) => {
         return res.status(401).send("Not authorized, token failed");
     }
 };
+
+export const admin = async(req,res,next)=>{
+    const {id} = req
+    const user = await User.findById(id)
+    if(user.userType !== "admin"){
+        return res.status(401).send("Not authorized, you are not an admin");
+    }
+    next()
+
+}

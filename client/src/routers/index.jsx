@@ -16,6 +16,7 @@ import DevLayout from "../pages/dev/DevLayout";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
 import { useAuthStore } from "../store/authStore";
+import Dashboard from "../pages/dev/Dashboard";
 // import { AppHome, AdminHome} from '../pages'
 
 export const AppRouter = () => {
@@ -71,7 +72,7 @@ export const DevRouter = () => {
       errorElement: "error",
       loader: DevLoader,
       children: [
-        { index: true, element: "<Login />" },
+        { index: true, element: <Dashboard /> },
         { path: "login", element: "<Login />" },
         { path: "register", element: "<SignUp />" },
         { path: "contact", element: "<Contact />" },

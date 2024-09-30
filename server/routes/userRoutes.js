@@ -1,6 +1,6 @@
 import express from "express"
 import { approveUserViaLink, checkAuth, login, signup } from "../controllers/auth.controller.js"
-import { verifyToken } from "../middlewares/verifyToken.js";
+import { admin, verifyToken } from "../middlewares/verifyToken.js";
 
 
 const router = express.Router()
@@ -8,7 +8,7 @@ const router = express.Router()
 router.route('/').post(signup)
 router.get('/approve', approveUserViaLink);
 router.post('/login', login )
-router.get("/check-auth", verifyToken, checkAuth);
+router.get("/check-auth", verifyToken,admin, checkAuth);
 
 
 // router.post('/verifyMail', verifyMail )
