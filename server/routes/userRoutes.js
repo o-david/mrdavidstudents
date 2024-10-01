@@ -8,7 +8,7 @@ const router = express.Router()
 router.route('/').post(signup)
 router.get('/approve', approveUserViaLink);
 router.post('/login', login )
-router.get("/check-auth", verifyToken,admin, checkAuth);
+router.get("/check-auth", verifyToken, checkAuth);
 
 
 // router.post('/verifyMail', verifyMail )

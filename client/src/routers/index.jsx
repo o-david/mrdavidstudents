@@ -67,23 +67,18 @@ export const DevRouter = () => {
   
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "*",
       element: <DevLayout />,
       errorElement: "error",
       loader: DevLoader,
       children: [
         { index: true, element: <Dashboard /> },
-        { path: "login", element: "<Login />" },
-        { path: "register", element: "<SignUp />" },
+        { path: "profile", element: "profile" },
+        { path: "resources", element: "resources" },
         { path: "contact", element: "<Contact />" },
+        { path: "*", element: "<h1>Page not found</h1>" },
       ],
-    },
-    {
-      path: "/stuff",
-      element: "<DevLayout />",
-      loader: DevLoader,
-      errorElement: "error",
-    },
+    }
   ]);
 
   return <RouterProvider router={router} />;
