@@ -3,6 +3,7 @@ import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
 
 const DevLoader = ({ request }) => {
+  console.log("got in");
   const { checkAuth } = useAuthStore();
 
   useEffect(() => {

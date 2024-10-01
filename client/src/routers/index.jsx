@@ -5,19 +5,17 @@ import {
   RouterProvider,
   Routes,
   createBrowserRouter,
-  Outlet,
 } from "react-router-dom";
 import Layout from "./Layout";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import { useParams, useNavigate } from "react-router-dom";
-import DevLoader from "../pages/dev/devLoader";
 import DevLayout from "../pages/dev/DevLayout";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
 import { useAuthStore } from "../store/authStore";
-import Dashboard from "../pages/dev/Dashboard";
-// import { AppHome, AdminHome} from '../pages'
+import { useEffect } from "react";
+import Loader from "../components/Loader";
+import { GEN_URL } from "../constants/urlConstants";
 
 export const AppRouter = () => {
   function isloggedin() {
@@ -39,16 +37,6 @@ export const AppRouter = () => {
       path: "*",
       element: <PageNotFound />,
     },
-    {
-      path: "/writer",
-      element: isloggedin() ? <Layout /> : <Navigate to={"/"} />,
-      errorElement: <Navigate to={"/"} />,
-      children: [
-        { index: true, element: "<Home for writer />" },
-        { path: "about", element: "<About for writer />" },
-        { path: "contact", element: "<Contact for writer />" },
-      ],
-    },
   ]);
 
   return <RouterProvider router={router} />;
@@ -63,23 +51,75 @@ export const AdminRouter = () => {
     </BrowserRouter>
   );
 };
-export const DevRouter = () => {
-  
-  const router = createBrowserRouter([
-    {
-      path: "*",
-      element: <DevLayout />,
-      errorElement: "error",
-      loader: DevLoader,
-      children: [
-        { index: true, element: <Dashboard /> },
-        { path: "profile", element: "profile" },
-        { path: "resources", element: "resources" },
-        { path: "contact", element: "<Contact />" },
-        { path: "*", element: "<h1>Page not found</h1>" },
-      ],
+export const DevRouter = () => {  
+  const { isCheckingAuth, checkAuth } = useAuthStore();
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const params = {};
+    const handleAuth = async (token) => {
+          await checkAuth(); // Check authentication status
+          // Delete query parameters from the URL
+          urlParams.forEach((_, key) => {
+            urlParams.delete(key);
+          });
+        
+          // Update the URL without reloading
+          window.history.replaceState({}, document.title, window.location.pathname + '?' + urlParams.toString());
+        };
+    function getQueryParams() {
+      // Retrieve query parameters
+      for (const [key, value] of urlParams.entries()) {
+        params[key] = value;
+      }
+    
+    
+      return params;
     }
-  ]);
+    const getToken = () => {
+          let token = localStorage.getItem("token");
+          if (!token) {
+            token = getQueryParams().token
+            console.log(token);
+          }
+          return token;
+        };
+        const token = getToken()
+        if (!token) {
+              window.location.href = `${GEN_URL}/login?logout=true`; // Redirect if no token is found
+            } else {
+              localStorage.setItem("token", token); // Store the token in local storage
+              handleAuth(token); // Proceed with the token
+            }
+	}, []);
 
-  return <RouterProvider router={router} />;
+  if (isCheckingAuth) return <Loader />;
+
+  return (
+    <BrowserRouter>
+      <Routes>
+      <Route
+					path='/*'
+					element={
+						<ProtectedRoute>
+							<DevLayout />
+						</ProtectedRoute>
+					}
+				/>
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+const ProtectedRoute = ({ children }) => {
+	// const { isAuthenticated, user } = useAuthStore();
+
+	// if (!isAuthenticated) {
+	// 	return <Navigate to='/login' replace />;
+	// }
+
+	// if (!user.isVerified) {
+	// 	return <Navigate to='/verify-email' replace />;
+	// }
+
+	return children;
 };
