@@ -3,6 +3,7 @@ import cors from 'cors';
 import {connectDB} from './db/db.js';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
+import projectRoutes from './routes/projectRoutes.js';
 import cookieParser from 'cookie-parser';
 
 
@@ -23,6 +24,7 @@ app.use(express.json()); // allows us to parse incoming requests:req.body
 app.use(cookieParser()); // allows us to parse incoming cookies
 
 app.use('/api/user', userRoutes)
+app.use('/api/project', projectRoutes); 
 
 
 

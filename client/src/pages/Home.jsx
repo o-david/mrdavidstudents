@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 const Home = () => {
   return (
     <div className="bg-sec">
-      <div className='h-[5vh]'>
+      <div className='h-[10vh]'>
       </div>
       <Header/>
       <HeroSection/>

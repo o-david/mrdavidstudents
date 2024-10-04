@@ -54,16 +54,21 @@ const Sidebar = ({ currentPage }) => (
 );
 
 const DevLayout = () => {
+  const [currentPage, setCurrentPage] = useState("");
+  const handletopage = (page) => {
+    setCurrentPage(page);
+  }
+  
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Header />
       <div className="flex flex-1 h-[90vh] flex-col md:flex-row">
-        <Sidebar currentPage={"profile"} />
+        <Sidebar currentPage={ currentPage} />
         <main className="flex-1 p-4 bg-[#faf9f6]">
           <Routes>
-            <Route path="/" element={<Dashboard/>}/>
-            <Route path="/projects" element={<Projects/>}/>
-            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/" element={<Dashboard childPage={handletopage}/>}/>
+            <Route path="/projects" element={<Projects childPage={handletopage}/>}/>
+            <Route path="/profile" element={<Profile childPage={handletopage}/>}/>
           </Routes>
         </main>
       </div>

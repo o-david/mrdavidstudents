@@ -15,6 +15,7 @@ export const verifyToken = (req, res, next) => {
     }
 
     try {
+        console.log("Found token");
         // Decode the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decoded.userId; // Attach userId to the request object

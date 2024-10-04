@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
-    <header className=' sticky h-[15vh] top-0  w-[100%] bottom backdrop-blur-lg z-50'>
+    <header className=' sticky h-[10vh]  top-0  w-[100%] bottom backdrop-blur-lg z-50 px-6'>
         <div className="flex py-2 mx-auto  justify-between items-center container max-w-[1440px] h-full">
           <Link to={'/'} className="font-semibold text-gray-800 cursor-pointer h-full flex items-center">
         <img src={logo} className='w-20 ' alt="" />
