@@ -20,7 +20,7 @@ export const useAuthStore = create((set) => ({
   signup: async (email, firstName, lastName) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${API_URL}`, {
+      const response = await axios.post(`${API_URL}/user`, {
         email,
         firstName,
         lastName,
@@ -41,7 +41,7 @@ export const useAuthStore = create((set) => ({
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {
-      const response = await api.get(`/check-auth`);
+      const response = await api.get(`/user/check-auth`);
 			set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
 		} catch (err) {
       console.log(err);
@@ -51,7 +51,7 @@ export const useAuthStore = create((set) => ({
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${API_URL}/user/login`, {
         email,
         password,
       });
@@ -73,7 +73,7 @@ export const useAuthStore = create((set) => ({
   checkAuthWithToken: async (token) => {
     set({ isCheckingAuth: true, error: null });
     try {
-      const response = await axios.get(`${API_URL}/check-auth`, {
+      const response = await axios.get(`${API_URL}/user/check-auth`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });

@@ -14,6 +14,76 @@ const projectsData = [
       technologies: ["Vue.js", "Node.js", "MongoDB"]
     },
     {
+      name: "EcoTrack",
+      studentName: "Emma Johnson",
+      type: "Mobile App",
+      screenshot: "https://picsum.photos/seed/EcoTrack/800/600",
+      technologies: ["React Native", "Firebase", "Google Maps API"]
+    },
+    {
+      name: "MindfulMe",
+      studentName: "Liam Chen",
+      type: "Web Application",
+      screenshot: "https://picsum.photos/seed/MindfulMe/800/600",
+      technologies: ["Vue.js", "Node.js", "MongoDB"]
+    },
+    {
+      name: "EcoTrack",
+      studentName: "Emma Johnson",
+      type: "Mobile App",
+      screenshot: "https://picsum.photos/seed/EcoTrack/800/600",
+      technologies: ["React Native", "Firebase", "Google Maps API"]
+    },
+    {
+      name: "MindfulMe",
+      studentName: "Liam Chen",
+      type: "Web Application",
+      screenshot: "https://picsum.photos/seed/MindfulMe/800/600",
+      technologies: ["Vue.js", "Node.js", "MongoDB"]
+    },
+    {
+      name: "EcoTrack",
+      studentName: "Emma Johnson",
+      type: "Mobile App",
+      screenshot: "https://picsum.photos/seed/EcoTrack/800/600",
+      technologies: ["React Native", "Firebase", "Google Maps API"]
+    },
+    {
+      name: "MindfulMe",
+      studentName: "Liam Chen",
+      type: "Web Application",
+      screenshot: "https://picsum.photos/seed/MindfulMe/800/600",
+      technologies: ["Vue.js", "Node.js", "MongoDB"]
+    },
+    {
+      name: "EcoTrack",
+      studentName: "Emma Johnson",
+      type: "Mobile App",
+      screenshot: "https://picsum.photos/seed/EcoTrack/800/600",
+      technologies: ["React Native", "Firebase", "Google Maps API"]
+    },
+    {
+      name: "MindfulMe",
+      studentName: "Liam Chen",
+      type: "Web Application",
+      screenshot: "https://picsum.photos/seed/MindfulMe/800/600",
+      technologies: ["Vue.js", "Node.js", "MongoDB"]
+    },
+    {
+      name: "EcoTrack",
+      studentName: "Emma Johnson",
+      type: "Mobile App",
+      screenshot: "https://picsum.photos/seed/EcoTrack/800/600",
+      technologies: ["React Native", "Firebase", "Google Maps API"]
+    },
+    {
+      name: "MindfulMe",
+      studentName: "Liam Chen",
+      type: "Web Application",
+      screenshot: "https://picsum.photos/seed/MindfulMe/800/600",
+      technologies: ["Vue.js", "Node.js", "MongoDB"]
+    },
+    {
       name: "CodeCollab",
       studentName: "Sophia Patel",
       type: "Desktop Application",

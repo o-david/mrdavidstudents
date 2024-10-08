@@ -33,7 +33,7 @@ const HeroSection = () => {
             <Link to={'/register'} className="border border-sec3 rounded-lg p-2 transition-all hover:bg-sec3 hover:text-white">
             Join Community
             </Link>
-              <Link to={'/'} className="text-sm font-semibold leading-6 text-sec3 ">
+              <Link to={'/'} className="text-sm font-semibold leading-6 text-sec3 flex gap-0.5 transition-all hover:gap-2">
                 Hire a Developer <span aria-hidden="true">→</span>
               </Link>
             </div>

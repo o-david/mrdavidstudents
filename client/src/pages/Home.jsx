@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 
 const Home = () => {
   return (
-    <div className="bg-sec">
+    <div className="bg-sec no-scrollbar overflow-scroll h-screen">
       <div className='h-[10vh]'>
       </div>
       <Header/>

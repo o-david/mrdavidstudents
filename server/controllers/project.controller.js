@@ -1,7 +1,7 @@
 import { Project } from "../models/projectModel.js";
 
 export const addProject = async (req, res) => {
-    console.log("i got here");
+
   const { name, desc, imgUrl, type, technologies, liveUrl, githubUrl } =
     req.body;
   try {
@@ -39,3 +39,18 @@ export const addProject = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
+
+export const getProjects = async (req, res) => {
+
+  try {
+    const { type, technologies, id } = req.query;
+    const query = {};
+    if (id) query.devId = id;
+    if (type) query.type = type;
+    if (technologies) query.technologies = { $in: technologies.split(",") };
+    const projects = await Project.find(query);
+    res.status(200).json({ success: true, data: projects });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};  

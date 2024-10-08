@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp";
 import Input from "../../components/Input";
+import projectsData from "../../data/projectData";
+import ProjectCard from "../../components/ProjectCard";
 
 const Projects = ({ childPage }) => {
   const [showPopUp, setShowPopUp] = useState(false);
@@ -19,15 +21,21 @@ const Projects = ({ childPage }) => {
     setFormData({ ...formData, [name]: value });
   };
   return (
-    <div>
+    <div className="flex flex-col justify-between h-full gap-6">
       <h1 className="text-3xl text-sec3 border-b-2 pb-4">Projects</h1>
       <div
         onClick={togglePopUp}
-        className="fixed bg-pry rounded-full text-sec3 font-black text-7xl w-20 aspect-square flex items-center justify-center cursor-pointer opacity-40 hover:opacity-100 bottom-4 right-4"
+        className="fixed bg-pry rounded-full text-sec3 font-black text-7xl w-20 aspect-square flex items-center justify-center cursor-pointer opacity-40 hover:opacity-100 bottom-4 right-4 z-10"
       >
         <span className="flex items-center justify-center">+</span>
       </div>
-      <div className=" overflow-y-scroll"></div>
+<div className=" h-full overflow-y-scroll no-scrollbar">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {projectsData.map((project, index) => (
+          <ProjectCard key={index} project={project} />
+        ))}
+      </div>
+        </div>
       {showPopUp && (
         <PopUp>
           <div className="sm:w-[45%] w-full flex text-sec3 flex-col items-center gap-10 bg-pry py-8 rounded-lg shadow-md relative">
