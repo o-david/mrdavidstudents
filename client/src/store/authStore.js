@@ -44,8 +44,13 @@ export const useAuthStore = create((set) => ({
       const response = await api.get(`/user/check-auth`);
 			set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
 		} catch (err) {
+      if(err.response.status===401){
+        localStorage.removeItem('token')
+        window.location.href = `${GEN_URL}/login?logout=true`; // Redirect if no token is found
+
+      }
       console.log(err);
-      set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+      set({ error: true, isCheckingAuth: false, isAuthenticated: false });
     }
   },
   login: async (email, password) => {

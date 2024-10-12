@@ -3,6 +3,9 @@ import PopUp from "../../components/PopUp";
 import Input from "../../components/Input";
 import projectsData from "../../data/projectData";
 import ProjectCard from "../../components/ProjectCard";
+import api from "../../utils/api";
+import { API_URL } from "../../constants/urlConstants";
+import axios from "axios";
 
 const Projects = ({ childPage }) => {
   const [showPopUp, setShowPopUp] = useState(false);
@@ -12,14 +15,60 @@ const Projects = ({ childPage }) => {
     childPage("projects");
   }, []);
   const [formData, setFormData] = useState({
-    name: "",
-    lastName: "",
-    email: "",
+    name: "App4",
+    desc: "this is a random desc",
+    imgUrl: "www.app4.com",
+    type: "mobile",
+    technologies: ["typescript", "Node"],
+    liveUrl: "www.app4.com",
+    githubUrl: "github.com"
   });
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleImageUpload = async (file) => {
+    console.log("Uploading");
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "projectImg"); // Replace with your Cloudinary upload preset
+    data.append("cloud_name", "dfdjpafgs"); // Replace with your Cloudinary upload preset
+  
+    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/dfdjpafgs/image/upload`, 
+        {
+          method:"POST",
+          body:data
+        }); // Replace with your Cloudinary cloud name
+        const res = await response.json();
+        console.log(res); // Log the URL of the uploaded image
+      return res.secure_url; // Return the URL of the uploaded image
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null; // Handle error appropriately
+    }
   };
+  const handleInputChange = async (e) => {
+    const { name, value, type, files } = e.target;
+    if (type === "file" && files.length > 0) {
+      const imageUrl = await handleImageUpload(files[0]);
+      setFormData({ ...formData, [name]: imageUrl });
+    }else if(name==="technologies"){
+      const tech = value.split(',')
+      console.log(tech);
+      setFormData({ ...formData, [name]: tech });
+    } 
+    else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+		try {
+			await api.post(`${API_URL}/project`,formData);
+		} catch (error) {
+			console.log(error);
+		}
+  };
+
   return (
     <div className="flex flex-col justify-between h-full gap-6">
       <h1 className="text-3xl text-sec3 border-b-2 pb-4">Projects</h1>
@@ -41,7 +90,7 @@ const Projects = ({ childPage }) => {
           <div className="sm:w-[45%] w-full flex text-sec3 flex-col items-center gap-10 bg-pry py-8 rounded-lg shadow-md relative">
             <h3 className="text-[2rem]">Add New Project</h3>
 
-            <form className="w-full max-w-lg mx-auto">
+            <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto">
               <div className="mb-8">
                 <Input
                   placeholder="Project Name"
@@ -59,7 +108,7 @@ const Projects = ({ childPage }) => {
                   value={formData.desc}
                   rows="2"
                   onChange={handleInputChange}
-                />
+                  />
               </div>
 
               <div className="mb-8">
@@ -71,14 +120,20 @@ const Projects = ({ childPage }) => {
                     id="picture"
                     type="file"
                     class="flex h-10 w-[80%] rounded-md border border-sec3 border-input  px-3 py-2 text-sm text-sec3 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+                    onChange={handleInputChange}
+                    name="imgUrl"
                   />
                 </div>
               </div>
               <div className="mb-8 bg-pry flex items-center justify-between">
-                <label htmlFor="" className=" whitespace-nowrap">
+                <label htmlFor="projectType" className="whitespace-nowrap">
                   Project Type
                 </label>
                 <select
+                  id="projectType"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleInputChange}
                   className="w-[70%] px-3 py-2 text-gray-700 border border-sec3 rounded-lg focus:outline-none bg-pry"
                   required
                 >
