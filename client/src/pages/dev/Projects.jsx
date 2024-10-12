@@ -5,23 +5,24 @@ import projectsData from "../../data/projectData";
 import ProjectCard from "../../components/ProjectCard";
 import api from "../../utils/api";
 import { API_URL } from "../../constants/urlConstants";
-import axios from "axios";
+import Loader from "../../components/Loader";
 
 const Projects = ({ childPage }) => {
   const [showPopUp, setShowPopUp] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const togglePopUp = () => setShowPopUp(!showPopUp);
   useEffect(() => {
     childPage("projects");
   }, []);
   const [formData, setFormData] = useState({
-    name: "App4",
-    desc: "this is a random desc",
-    imgUrl: "www.app4.com",
-    type: "mobile",
-    technologies: ["typescript", "Node"],
-    liveUrl: "www.app4.com",
-    githubUrl: "github.com"
+    name: "",
+    desc: "",
+    imgUrl: "",
+    type: "",
+    technologies: "",
+    liveUrl: "",
+    githubUrl: ""
   });
   const handleImageUpload = async (file) => {
     console.log("Uploading");
@@ -63,7 +64,20 @@ const Projects = ({ childPage }) => {
     e.preventDefault();
     console.log(formData);
 		try {
+      setloading(true);
 			await api.post(`${API_URL}/project`,formData);
+      setShowPopUp(false);
+      setloading(false);
+      // After successful submission, reset the form
+      setFormData({
+        name: "",
+        desc: "",
+        imgUrl: "",
+        type: "",
+        technologies: "",
+        liveUrl: "",
+        githubUrl: ""
+      });
 		} catch (error) {
 			console.log(error);
 		}
@@ -87,6 +101,8 @@ const Projects = ({ childPage }) => {
         </div>
       {showPopUp && (
         <PopUp>
+                {loading && <Loader/>}
+
           <div className="sm:w-[45%] w-full flex text-sec3 flex-col items-center gap-10 bg-pry py-8 rounded-lg shadow-md relative">
             <h3 className="text-[2rem]">Add New Project</h3>
 
@@ -155,7 +171,7 @@ const Projects = ({ childPage }) => {
               <div className="mb-8">
                 <Input
                   placeholder="Live URL"
-                  type={"url"}
+                  type={"text"}
                   name="liveUrl"
                   value={formData.liveUrl}
                   onChange={handleInputChange}
@@ -164,7 +180,7 @@ const Projects = ({ childPage }) => {
               <div className="mb-8">
                 <Input
                   placeholder="GitHub URL"
-                  type={"url"}
+                  type={"text"}
                   name="githubUrl"
                   value={formData.githubUrl}
                   onChange={handleInputChange}
