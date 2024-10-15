@@ -27,7 +27,7 @@ const projectSchema = new mongoose.Schema({
   },
   devId:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
   liveUrl: String,

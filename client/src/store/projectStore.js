@@ -12,7 +12,6 @@ export const useProjectStore = create((set) => ({
     set({ isLoading: true, error: null });
     try {
       const { type, id, technologies } = filterBy;
-      console.log(type, id, technologies);
       let url = '/project?';
       if (type) url += `type=${type}&`;
       if (technologies) url += `technologies=${technologies}&`;

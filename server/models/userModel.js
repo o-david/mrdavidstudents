@@ -15,6 +15,9 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
+  certifications: {
+    type: [String],
+  },
   password: {
     type: String,
     required: true,
@@ -29,6 +32,38 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  currentRole:{
+    type: String,
+  },
+  education:[{
+    degree: String,
+    fieldOfStudy: String,
+    institution: String,
+    startDate: Date,
+    endDate: Date,
+  }],
+  experience:[{
+    company: String,
+    position: String,
+    startDate: Date,
+    endDate: Date,
+    achievements: [String],
+  }],
+  address:{
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
   profilePicture: {
     type: String,
   },
@@ -40,6 +75,9 @@ const userSchema = new mongoose.Schema({
   lastLogin: {
     type: Date,
     default: Date.now,
+  },
+  skills: {
+    type: [String],
   },
   bio: {
     type: String,

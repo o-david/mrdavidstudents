@@ -1,16 +1,13 @@
 import { APPS } from "./constants";
 
 export const getApp = () =>{
-    console.log(window.location.hostname);
     const subDomain= getSubDomain(window.location.hostname);
     
     const main = APPS.find((app) => app.main)
     if(!main) throw new Error("Must provide main app");
-    console.log(subDomain);
 
     if(subDomain ==='') return main.app;
     const app=APPS.find((app) => subDomain === app.subdomain);
-    console.log(app);
     if(!app)return main.app;
     
     return app.app;    
