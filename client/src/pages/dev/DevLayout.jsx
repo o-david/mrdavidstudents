@@ -44,9 +44,6 @@ const Sidebar = ({ currentPage }) => (
       <Link to="/" className={`mb-4  transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === '' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:shadow-lg hover:text-white text-gray-800 cursor-pointer`}>
         <li className="font-semibold  hover:text-white">Dashboard</li>
       </Link>
-      <Link to="/profile" className={`mb-4 transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === 'profile' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:text-white text-gray-800 hover:shadow-lg cursor-pointer`}>
-        <li className="font-semibold">Profile</li>
-      </Link>
       <Link to="/resources" className={`mb-4 transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === 'resources' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:text-white text-gray-800 hover:shadow-lg cursor-pointer`}>
         <li  className="font-semibold ">Resources</li>
       </Link>
@@ -84,7 +81,6 @@ const DevLayout = () => {
           <Routes>
             <Route path="/" element={<Dashboard childPage={handletopage}/>}/>
             <Route path="/projects" element={<Projects childPage={handletopage}/>}/>
-            <Route path="/profile" element={<Profile childPage={handletopage}/>}/>
           </Routes>
         </main>
       </div>

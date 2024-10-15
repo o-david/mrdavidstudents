@@ -16,6 +16,8 @@ import { useAuthStore } from "../store/authStore";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
 import { GEN_URL } from "../constants/urlConstants";
+import Profile from "../pages/dev/Profile";
+import DevProfile from "../pages/DevProfile";
 
 export const AppRouter = () => {
   function isloggedin() {
@@ -31,6 +33,7 @@ export const AppRouter = () => {
         { path: "login", element: <Login /> },
         { path: "register", element: <SignUp /> },
         { path: "contact", element: "<Contact />" },
+        { path: "dev/:username", element: <DevProfile /> },
       ],
     },
     {
@@ -97,6 +100,12 @@ export const DevRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path='/profile'
+          element={
+              <Profile dev={true}/>
+            }
+        />
       <Route
 					path='/*'
 					element={

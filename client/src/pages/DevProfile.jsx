@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
-import { useAuthStore } from "../../store/authStore";
-import ProjectCard from "../../components/ProjectCard";
-import { useProjectStore } from "../../store/projectStore";
-import { github, linkedin } from "../../assets";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useProjectStore } from "../store/projectStore";
+import { useEffect, useState } from "react";
+import { github, linkedin } from "../assets";
+import ProjectCard from "../components/ProjectCard";
+import api from "../utils/api";
 
 
-const Profile = ({dev}) => {
-  const { user } = useAuthStore();
+
+const DevProfile = ({dev}) => {
+  const { username } = useParams();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(false);
   const { projects, getProjects } = useProjectStore();
   const formatDate = (dateString, month=false) => {
     if (!dateString) return "Present";
@@ -25,9 +28,30 @@ const Profile = ({dev}) => {
   };
 
   useEffect(() => {
-    getProjects(user?._id);
-  }, []);
-  return (
+    const getProfile = async () => {
+      try {
+        const response = await api.get(`/user/${username}`);
+        setUser(response.data.user);
+      } catch (err) {
+        setError(true);
+        console.error("Error fetching user profile:", err);
+        // Handle error (e.g., show error message, redirect)
+      }
+    };
+
+    const fetchProjects = async () => {
+      try {
+        await getProjects(username);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        // Handle error (e.g., show error message)
+      }
+    };
+
+    getProfile();
+    fetchProjects();
+  }, [username, getProjects]);
+  return (!error?
     <div className="flex flex-col justify-between h-full gap-6 px-6 pb-6">
       {dev && <div className="rounded-full bg-sec3 absolute top-8 size-10 flex items-center justify-center font-black cursor-pointer text-white" onClick={ ()=>navigate('/')}>{`<`}</div>}
       <div className="mt-10"></div>
@@ -177,13 +201,16 @@ const Profile = ({dev}) => {
         </div>
         <h2 className="text-xl font-bold border-b-2 pb-2">Projects</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects?.slice(0, 8).map((project, index) => (
+          {user && projects?.slice(0, 8).map((project, index) => (
             <ProjectCard key={index} project={project} />
           ))}
         </div>
       </div>
+    </div>:
+    <div>
+      Invalid user name
     </div>
   );
 };
 
-export default Profile;
+export default DevProfile;

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore';
+import { GEN_URL } from '../constants/urlConstants';
 
 const ProjectCard = ({project}) => {
   const { user } = useAuthStore();
@@ -37,7 +38,7 @@ const ProjectCard = ({project}) => {
     <img src={project.imgUrl} alt={project.name} className="w-full h-48 object-cover" />
     <div className="p-4">
       <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
-      <Link to={`/developers/${project.studentName}`} className="text-gray-600 mb-1">{project?.devId?.firstName} {project?.devId?.lastName}</Link>
+      <a href={`${GEN_URL}/dev/${project?.devId?.username}`} target="_blank" className="text-gray-600 mb-1">{project?.devId?.firstName} {project?.devId?.lastName}</a>
       <p className="text-gray-500 mb-2">{project.type}</p>
       <div className="flex flex-wrap gap-2 h-[2lh] overflow-y-hidden items-start">
         {project.technologies.map((tech, index) => (

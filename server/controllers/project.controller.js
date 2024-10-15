@@ -57,7 +57,7 @@ export const getProjects = async (req, res) => {
     if (technologies) query.technologies = { $in: technologies.split(",") };
     const projects = await Project.find(query).populate({
       path: 'devId',
-      select: 'firstName lastName',
+      select: 'firstName lastName username',
     })
     .sort({ _id: -1 })
     .lean();
