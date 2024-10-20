@@ -4,6 +4,8 @@ import ProjectCard from "../../components/ProjectCard";
 import { useProjectStore } from "../../store/projectStore";
 import { github, linkedin } from "../../assets";
 import { useNavigate } from "react-router-dom";
+import AddProject from "../../components/AddProject";
+import ProfileUpdateComponent from "../../components/ProfileUpdateComponent";
 
 
 const Profile = ({dev}) => {
@@ -29,6 +31,8 @@ const Profile = ({dev}) => {
   }, []);
   return (
     <div className="flex flex-col justify-between h-full gap-6 px-6 pb-6">
+      <AddProject/>
+      <ProfileUpdateComponent/>
       {dev && <div className="rounded-full bg-sec3 absolute top-8 size-10 flex items-center justify-center font-black cursor-pointer text-white" onClick={ ()=>navigate('/')}>{`<`}</div>}
       <div className="mt-10"></div>
       {dev && <div className=""><h1 className="text-3xl text-center font-bold border-b-2 pb-4">Profile</h1> </div>}
@@ -84,7 +88,7 @@ const Profile = ({dev}) => {
             {/* Skills Section */}
             <div className="bg-white p-4 mt-6 rounded-lg shadow">
               <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="flex flex-wrap gap-2">
                 {user &&
                   user.skills &&
                   user.skills.map((skill, index) => {

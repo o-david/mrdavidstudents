@@ -50,9 +50,9 @@ const Sidebar = ({ currentPage }) => (
       <Link to="/utilities" className={`mb-4 transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === 'utilities' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:shadow-lg cursor-pointer`}>
         <li className="font-semibold text-gray-800 hover:text-blue-600">Utilities</li>
       </Link>
-      <Link to="/surveys" className={`mb-4 transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === 'surveys' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:shadow-lg cursor-pointer`}>
+      {/* <Link to="/surveys" className={`mb-4 transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === 'surveys' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:shadow-lg cursor-pointer`}>
         <li className="font-semibold text-gray-800 hover:text-blue-600">Surveys</li>
-      </Link>
+      </Link> */}
       <Link to="/projects" className={`mb-4 transition-transform transform hover:scale-105 p-3 rounded-lg shadow ${currentPage === 'projects' ? 'bg-pry' : 'bg-[#faf9f6]'} hover:bg-pry hover:text-white text-gray-800 hover:shadow-lg cursor-pointer`}>
         <li className="font-semibold">Projects</li>
       </Link>
