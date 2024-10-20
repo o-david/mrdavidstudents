@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { github, linkedin } from "../assets";
 import ProjectCard from "../components/ProjectCard";
 import api from "../utils/api";
+import Loader from "../components/Loader";
+import PageNotFound from "./PageNotFound";
 
 
 
 const DevProfile = ({dev}) => {
   const { username } = useParams();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false);
@@ -32,32 +35,38 @@ const DevProfile = ({dev}) => {
       try {
         const response = await api.get(`/user/${username}`);
         setUser(response.data.user);
+        await fetchProjects();
+        setLoading(false);
       } catch (err) {
         setError(true);
         console.error("Error fetching user profile:", err);
+        setLoading(false);
         // Handle error (e.g., show error message, redirect)
       }
     };
 
     const fetchProjects = async () => {
       try {
-        await getProjects(username);
+        await getProjects({username});
       } catch (err) {
         console.error("Error fetching projects:", err);
         // Handle error (e.g., show error message)
       }
     };
-
+    setLoading(true);
     getProfile();
-    fetchProjects();
   }, [username, getProjects]);
-  return (!error?
-    <div className="flex flex-col justify-between h-full gap-6 px-6 pb-6">
+  return (
+    
+    loading? <Loader/>:
+    !error?
+
+    <div className="flex flex-col justify-between h-full gap-6 px-10 pb-6">
       {dev && <div className="rounded-full bg-sec3 absolute top-8 size-10 flex items-center justify-center font-black cursor-pointer text-white" onClick={ ()=>navigate('/')}>{`<`}</div>}
       <div className="mt-10"></div>
       {dev && <div className=""><h1 className="text-3xl text-center font-bold border-b-2 pb-4">Profile</h1> </div>}
       <div className="h-full overflow-y-scroll no-scrollbar flex flex-col gap-6">
-        <div className=" mx-auto rounded-lg  grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className=" mx-auto rounded-lg  grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
           {/* Left Section - Profile Info */}
           <div className="col-span-1 ">
             <div className="bg-white p-4 rounded-lg shadow">
@@ -108,7 +117,7 @@ const DevProfile = ({dev}) => {
             {/* Skills Section */}
             <div className="bg-white p-4 mt-6 rounded-lg shadow">
               <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {user &&
                   user.skills &&
                   user.skills.map((skill, index) => {
@@ -208,7 +217,7 @@ const DevProfile = ({dev}) => {
       </div>
     </div>:
     <div>
-      Invalid user name
+      <PageNotFound message={"It's possible this page is under construction or you've encountered a faulty path. Please check the URL and try again, or go to home page."} home={true}/>
     </div>
   );
 };

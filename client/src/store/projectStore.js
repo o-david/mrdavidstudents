@@ -11,11 +11,12 @@ export const useProjectStore = create((set) => ({
   getProjects: async (filterBy = {}) => {
     set({ isLoading: true, error: null });
     try {
-      const { type, id, technologies } = filterBy;
+      const { type, id, technologies, username } = filterBy;
       let url = '/project?';
       if (type) url += `type=${type}&`;
       if (technologies) url += `technologies=${technologies}&`;
       if (id) url += `id=${id}`;
+      if (username) url += `username=${username}&`; // Added username filter
       url = url.replace(/&$/, ''); // Remove trailing '&' if present
 
       const response = await api.get(url);

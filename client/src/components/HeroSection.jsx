@@ -33,8 +33,8 @@ const HeroSection = () => {
             <Link to={'/register'} className="border border-sec3 rounded-lg p-2 transition-all hover:bg-sec3 hover:text-white">
             Join Community
             </Link>
-              <Link to={'/'} className="text-sm font-semibold leading-6 text-sec3 flex gap-0.5 transition-all hover:gap-2">
-                Hire a Developer <span aria-hidden="true">→</span>
+              <Link to={'/'} className="text-sm font-semibold leading-6 text-sec3 flex gap-0.5 transition-all hover:gap-2 relative group duration-700">
+                Hire a Developer <span aria-hidden="true" className='absolute left-full group-hover:left-[103%] '>→</span>
               </Link>
             </div>
           </div>

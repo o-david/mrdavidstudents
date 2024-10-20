@@ -1,5 +1,5 @@
 import { Project } from "../models/projectModel.js";
-import  User  from "../models/userModel.js";
+import User from "../models/userModel.js";
 import mongoose from "mongoose";
 
 export const addProject = async (req, res) => {
@@ -7,9 +7,18 @@ export const addProject = async (req, res) => {
   session.startTransaction();
 
   try {
-    const { name, desc, imgUrl, type, technologies, liveUrl, githubUrl } = req.body;
+    const { name, desc, imgUrl, type, technologies, liveUrl, githubUrl } =
+      req.body;
 
-    if (!name || !desc || !imgUrl || !type || !technologies || !liveUrl || !githubUrl) {
+    if (
+      !name ||
+      !desc ||
+      !imgUrl ||
+      !type ||
+      !technologies ||
+      !liveUrl ||
+      !githubUrl
+    ) {
       throw new Error("All fields are required");
     }
 
@@ -38,7 +47,8 @@ export const addProject = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Your project has been created successfully and your skills have been updated",
+      message:
+        "Your project has been created successfully and your skills have been updated",
     });
   } catch (error) {
     await session.abortTransaction();
@@ -48,24 +58,37 @@ export const addProject = async (req, res) => {
 };
 
 export const getProjects = async (req, res) => {
-
   try {
-    const { type, technologies, id } = req.query;
+    const { type, technologies, id, username } = req.query;
     const query = {};
     if (id) query.devId = id;
     if (type) query.type = type;
     if (technologies) query.technologies = { $in: technologies.split(",") };
-    const projects = await Project.find(query).populate({
-      path: 'devId',
-      select: 'firstName lastName username',
-    })
-    .sort({ _id: -1 })
-    .lean();
+
+    // If username is provided, find the user and filter by their ID
+    if (username) {
+      const user = await User.findOne({ username });
+      if (user) {
+        query.devId = user._id; // Set devId to the found user's ID
+      } else {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+    }
+
+    const projects = await Project.find(query)
+      .populate({
+        path: "devId",
+        select: "firstName lastName username",
+      })
+      .sort({ _id: -1 })
+      .lean();
     res.status(200).json({ success: true, data: projects });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
-};  
+};
 
 export const deleteProject = async (req, res) => {
   const session = await mongoose.startSession();
@@ -90,8 +113,12 @@ export const deleteProject = async (req, res) => {
     await Project.findByIdAndDelete(projectId).session(session);
 
     // Get all projects of the user to determine which skills to keep
-    const userProjects = await Project.find({ devId: req.userId }).session(session);
-    const remainingSkills = new Set(userProjects.flatMap(p => p.technologies));
+    const userProjects = await Project.find({ devId: req.userId }).session(
+      session
+    );
+    const remainingSkills = new Set(
+      userProjects.flatMap((p) => p.technologies)
+    );
 
     // Update user's skills
     await User.findByIdAndUpdate(
