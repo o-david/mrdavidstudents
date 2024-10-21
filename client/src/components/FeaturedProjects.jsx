@@ -21,7 +21,7 @@ const FeaturedProjects = () => {
         </div>
         <div className="text-center mt-10">
         <Link
-          to={"/register"}
+          to={"/allprojects"}
           className="border border-sec3 rounded-lg p-2 transition-all hover:bg-sec3 hover:text-white"
           >
           View Projects
