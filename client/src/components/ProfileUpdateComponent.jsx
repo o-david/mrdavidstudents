@@ -3,8 +3,10 @@ import Tooltip from "./Tooltip";
 import PopUp from "./PopUp";
 import Loader from "./Loader";
 import Input from "./Input";
+import { useAuthStore } from "../store/authStore";
 
 const ProfileUpdateComponent = () => {
+  const { user } = useAuthStore();
   const [showPopUp, setShowPopUp] = useState(false);
   const [loading, setloading] = useState(false);
   const [option, setOption] = useState("");
@@ -26,7 +28,7 @@ const ProfileUpdateComponent = () => {
   return (
     <div>
       <div class="flex justify-center py-8">
-        <div class="container mx-auto px-4">
+        {/* <div class="container mx-auto px-4">
           <div class="flex flex-col md:flex-row gap-6">
             <div class="md:w-[55%] bg-[#E8B4B8] p-6 rounded-lg shadow-md">
               <h2 class="text-xl font-semibold mb-4">Personal Details</h2>
@@ -246,7 +248,7 @@ const ProfileUpdateComponent = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         onClick={togglePopUp}
@@ -314,7 +316,44 @@ const ProfileUpdateComponent = () => {
               </h3>
             </div>
             {option === "" && (
-              <form className="border rounded-lg w-[95%] mx-auto p-4 py-8 overflow-hidden border-sec3">
+              <form className="border rounded-lg w-[95%] mx-auto p-4 py-4 overflow-hidden border-sec3">
+                <div className="w-24 h-24 rounded-full mx-auto overflow-hidden flex items-center justify-center relative">
+                <img
+                  className="w-full"
+                  src={user?.profilePicture?user.profilePicture:"https://via.placeholder.com/150"}
+                  alt="Profile"
+                />
+                <label htmlFor="picture" className="absolute cursor-pointer">
+                <svg
+            className="w-6 fill-white "
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              {" "}
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M20.8477 1.87868C19.6761 0.707109 17.7766 0.707105 16.605 1.87868L2.44744 16.0363C2.02864 16.4551 1.74317 16.9885 1.62702 17.5692L1.03995 20.5046C0.760062 21.904 1.9939 23.1379 3.39334 22.858L6.32868 22.2709C6.90945 22.1548 7.44285 21.8693 7.86165 21.4505L22.0192 7.29289C23.1908 6.12132 23.1908 4.22183 22.0192 3.05025L20.8477 1.87868ZM18.0192 3.29289C18.4098 2.90237 19.0429 2.90237 19.4335 3.29289L20.605 4.46447C20.9956 4.85499 20.9956 5.48815 20.605 5.87868L17.9334 8.55027L15.3477 5.96448L18.0192 3.29289ZM13.9334 7.3787L3.86165 17.4505C3.72205 17.5901 3.6269 17.7679 3.58818 17.9615L3.00111 20.8968L5.93645 20.3097C6.13004 20.271 6.30784 20.1759 6.44744 20.0363L16.5192 9.96448L13.9334 7.3787Z"
+              ></path>{" "}
+            </g>
+              </svg>
+              <input
+                    id="picture"
+                    type="file"
+                    className=" hidden"
+                    // onChange={handleInputChange}
+                    name="imgUrl"
+                  />
+                </label>
+              </div>
                 <div className="mb-8 flex justify-between">
                   <div className="w-[45%]">
                   <Input

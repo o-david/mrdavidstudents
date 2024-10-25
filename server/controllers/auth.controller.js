@@ -3,6 +3,8 @@ import User from "../models/userModel.js";
 import bcryptjs from "bcryptjs";
 import { sendApplicationStatusEmail, sendApprovalRequestEmail } from "../utils/mailsender/emails.js";
 import { generateToken } from "../utils/generateTokenAndSetCookie.js";
+import { FRONTEND_URL, FRONTEND_URL2, getGoogleTokens, getGoogleUser, GOOGLE_CLIENT_ID, REDIRECT_URI } from "../helpers/googleAuthHelper.js";
+
 
 export const signup = async (req, res) => {
 	const { email, firstName,lastName  } = req.body;
@@ -185,10 +187,67 @@ export const checkAuth = async (req, res) => {
 	}
 };
 
+export const googleAuth = (req, res) => {
+  console.log("i got here");
+  const googleAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=profile email&access_type=offline`;
+  console.log("i got here too");
+  res.redirect(googleAuthURL);
+}
+
+export const googleCallback = async (req, res) => {
+  const code = req.query.code;
+  if (!code) {
+    return res.status(400).send("Authorization code not found.");
+  }
+
+  try {
+    // Get tokens from Google
+    const { access_token } = await getGoogleTokens(code);
+
+    // Get user profile from Google
+    const userProfile = await getGoogleUser(access_token);
+
+    // Check if the user already exists in the database
+    let user = await User.findOne({ email: userProfile.email });
 
 
-export const logout = async (req, res) => {
-	res.clearCookie("token");
-	res.status(200).json({ success: true, message: "Logged out successfully" });
+    
+    // Generate a JWT for the authenticated or registered user
+    if (user){
+        if(user.applicationStatus !== "accepted"){
+          return res.redirect(`${FRONTEND_URL2}/register/?state=pending`);
+        }
+      
+        const token = generateToken(user._id);
+        return res.redirect(`${FRONTEND_URL}/?token=${token}`);
+    }
+    const password = generatePassword(10, {
+      includeNumbers: true,
+      includeAlphabet: true,
+      includeSpecial: true,
+      includelowerCase: true,
+      includeupperCase: true,
+    })
+    console.log("userProfile", userProfile);
+    
+		const newUser = new User({
+			email:userProfile.email,
+			firstName:userProfile.given_name,
+      lastName:userProfile.family_name,
+      password,
+      username: userProfile.email
+		});
+
+		await newUser.save();
+
+		await sendApprovalRequestEmail(process.env.ADMIN_EMAIL, newUser);
+
+    res.redirect(`${FRONTEND_URL2}/register/?state=pending`);
+
+    // Redirect the frontend with the token
+  } catch (error) {
+    console.error("Error during Google OAuth:", error.message);
+    res.status(500).send("Authentication failed.");
+  }
 };
  

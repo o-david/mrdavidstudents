@@ -5,7 +5,7 @@ import { logo } from "../assets";
 import Loader from "../components/Loader";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
-import { DEV_URL } from "../constants/urlConstants";
+import { API_URL, DEV_URL } from "../constants/urlConstants";
 const Login = () => {
   const navigate = useNavigate()
   const location = useLocation(); // Get the current location
@@ -16,7 +16,9 @@ const Login = () => {
   const queryParams = new URLSearchParams(location.search);
   const logout = queryParams.get("logout"); // Check for logout parameter
 
-
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_URL}/user/google`;
+  };
 
   useEffect(() => {
     if (logout) {
@@ -88,7 +90,7 @@ const Login = () => {
               )
             }
 
-            <div className="flex rounded-lg border hover:text-white hover:bg-sec3 border-sec3 py-2 items-center justify-center w-full">
+            <div className="flex rounded-lg border hover:text-white hover:bg-sec3 border-sec3 py-2 items-center justify-center w-full cursor-pointer" onClick={handleGoogleLogin} >
               <svg
                 className="w-6 h-6"
                 viewBox="0 0 25 25"
@@ -113,7 +115,7 @@ const Login = () => {
                 />
               </svg>
 
-              <button>Get Started with Google</button>
+              <p>Get Started with Google</p>
             </div>
           </div>
           <p className="text-center">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import VerificationRequired from "../components/VerificationRequired";
@@ -6,18 +6,31 @@ import ApprovalPending from "../components/ApprovalPending";
 import { logo } from "../assets";
 import Loader from "../components/Loader";
 import { useAuthStore } from "../store/authStore";
+import { API_URL } from "../constants/urlConstants";
 
 const SignUp = () => {
+  const queryParams = new URLSearchParams(location.search);
+  const stateParam = queryParams.get("state"); // Check for logout parameter
+ 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
   });
   const [state, setState] = useState('')
+  useEffect(() => {
+    if (stateParam) {
+      setState(stateParam)
+      console.log(stateParam);
+    }
+    
+  }, [])
 
   const { signup, error, isLoading } = useAuthStore();
 
-
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_URL}/user/google`;
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -79,7 +92,7 @@ const SignUp = () => {
             }
             <div className="h-[1px] w-4/5 bg-sec3"></div>
 
-            <div className="flex rounded-lg border hover:text-white hover:bg-sec3 border-sec3 py-2 items-center justify-center w-full">
+            <div onClick={handleGoogleLogin} className="flex rounded-lg border hover:text-white hover:bg-sec3 border-sec3 py-2 items-center justify-center w-full cursor-pointer">
               <svg
                 className="w-6 h-6"
                 viewBox="0 0 25 25"
@@ -104,7 +117,7 @@ const SignUp = () => {
                 />
               </svg>
 
-              <button>Get Started with Google</button>
+              <p>Get Started with Google</p>
             </div>
           </div>
           <p className="text-center">
@@ -115,11 +128,6 @@ const SignUp = () => {
           </p>
         </form>
       </div>
-      {
-        state=="verify" 
-        &&
-        <VerificationRequired email={formData.email} setState={setState}/>
-      }
       {
         state=="pending" 
         &&

@@ -5,10 +5,14 @@ import { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import Projects from "./Projects";
 import Profile from "./Profile";
+import { GEN_URL } from "../../constants/urlConstants";
 
 const Header = () => {
   const { user } = useAuthStore();
-
+  const logout =() =>{
+    localStorage.removeItem("token");
+    window.location.href = `${GEN_URL}/login?logout=true`; // Redirect if no token is found
+  }
   return (
       <header className="flex justify-between items-center px-4 bg-sec text-sec3 h-[10vh]">
         <Link to="/" className="h-4/5">
@@ -31,7 +35,7 @@ const Header = () => {
           <span>{user && user.firstName} {user && user.lastName}</span>
           <div className="hidden absolute left-0 top-full group-hover:flex flex-col w-full pt-3 overflow-hidden bg-sec rounded-b-lg cursor-pointer">
           <Link to="/profile" className="p-4 cursor-pointer hover:bg-sec3 hover:text-white">Profile</Link>
-          <Link to="/logout" className="p-4 cursor-pointer hover:bg-sec3 hover:text-white">Logout</Link>
+          <p onClick={logout} className="p-4 cursor-pointer hover:bg-sec3 hover:text-white">Logout</p>
           </div>
         </div>
       </header>
