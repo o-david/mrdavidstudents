@@ -27,7 +27,7 @@ const Profile = ({dev}) => {
   };
 
   useEffect(() => {
-    getProjects(user?._id);
+    getProjects({id:user?._id});
   }, []);
   return (
     <div className="flex flex-col justify-between h-full gap-6 px-6 pb-6">
@@ -181,9 +181,9 @@ const Profile = ({dev}) => {
         </div>
         <h2 className="text-xl font-bold border-b-2 pb-2">Projects</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects?.slice(0, 8).map((project, index) => (
+          {projects.length>0? projects.slice(0, 8).map((project, index) => (
             <ProjectCard key={index} project={project} />
-          ))}
+          )):<p>No projects added yet</p>}
         </div>
       </div>
     </div>
