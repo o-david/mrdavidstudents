@@ -27,7 +27,7 @@ const ProfileUpdateComponent = () => {
   };
   return (
     <div>
-      <div class="flex justify-center py-8">
+      <div className="flex justify-center py-8">
         {/* <div class="container mx-auto px-4">
           <div class="flex flex-col md:flex-row gap-6">
             <div class="md:w-[55%] bg-[#E8B4B8] p-6 rounded-lg shadow-md">

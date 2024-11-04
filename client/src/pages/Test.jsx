@@ -400,3 +400,125 @@
 //     Like
 //   </div>
 // </div>
+
+
+import React from 'react'
+
+const Test = () => {
+  return (
+    <div class="bg-gray-50">
+
+  {/* <!-- Navbar --> */}
+  <nav class="bg-orange-500 text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">Astercart</div>
+    <div class="space-x-6 hidden md:flex">
+      <a href="#" class="hover:underline">Home</a>
+      <a href="#" class="hover:underline">About</a>
+      <a href="#" class="hover:underline">Contact</a>
+      <a href="#" class="hover:underline">FAQs</a>
+    </div>
+    <button class="md:hidden">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+  </nav>
+
+  {/* <!-- Hero Section --> */}
+  <section class="text-center py-20 px-4 md:px-0">
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Fresh Groceries, Fast Delivery</h1>
+    <p class="text-gray-600 mb-8 max-w-md mx-auto">Shop from local supermarkets and have groceries delivered to your doorstep in minutes.</p>
+    <a href="#" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600">Get Started</a>
+  </section>
+
+  {/* <!-- Key Features Section --> */}
+  <section class="bg-gray-100 py-16 px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Why Choose Astercart?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+      <div class="text-center">
+        <h3 class="text-xl font-semibold mb-2">Fast Delivery</h3>
+        <p class="text-gray-600">Groceries delivered in under 60 minutes.</p>
+      </div>
+      <div class="text-center">
+        <h3 class="text-xl font-semibold mb-2">Local Supermarkets</h3>
+        <p class="text-gray-600">Support your community with every order.</p>
+      </div>
+      <div class="text-center">
+        <h3 class="text-xl font-semibold mb-2">Real-time Tracking</h3>
+        <p class="text-gray-600">Follow your delivery from store to doorstep.</p>
+      </div>
+      <div class="text-center">
+        <h3 class="text-xl font-semibold mb-2">Easy Payments</h3>
+        <p class="text-gray-600">Seamless checkout with multiple payment options.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* <!-- App Download Section --> */}
+  <section class="py-16 px-4 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Convenience at Your Fingertips</h2>
+    <p class="text-gray-600 mb-8 max-w-md mx-auto">Download the app and start ordering now!</p>
+    <div class="space-x-4">
+      <a href="#" class="inline-block bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900">Apple Store</a>
+      <a href="#" class="inline-block bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900">Google Play</a>
+    </div>
+  </section>
+
+  {/* <!-- How It Works --> */}
+  <section class="bg-gray-100 py-16 px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">How It Works</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">Browse Supermarkets</h3>
+        <p class="text-gray-600">Choose from a list of local stores.</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold mb-2">Add Items to Cart</h3>
+        <p class="text-gray-600">Easily browse and add items to your cart.</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold mb-2">Track Your Order</h3>
+        <p class="text-gray-600">Live updates on your delivery status.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* <!-- Testimonials --> */}
+  <section class="py-16 px-4 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-10">What Our Users Say</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <p class="text-gray-600 mb-4">"Astercart has made grocery shopping so easy! Fast, reliable, and local."</p>
+        <h4 class="font-semibold text-gray-800">- Jane D.</h4>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <p class="text-gray-600 mb-4">"The delivery is super quick, and the real-time tracking is great."</p>
+        <h4 class="font-semibold text-gray-800">- Mark R.</h4>
+      </div>
+    </div>
+  </section>
+
+  {/* <!-- Join the Network --> */}
+  <section class="bg-orange-500 text-white py-16 px-4 text-center">
+    <h2 class="text-3xl font-bold mb-6">Join the Astercart Network</h2>
+    <p class="max-w-md mx-auto mb-8">Partner with us as a supermarket or join as a rider for exciting opportunities.</p>
+    <div class="space-x-4">
+      <a href="#" class="inline-block bg-white text-orange-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">Partner with Us</a>
+      <a href="#" class="inline-block bg-white text-orange-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">Join as a Rider</a>
+    </div>
+  </section>
+
+  {/* <!-- Footer --> */}
+  <footer class="bg-gray-800 text-white py-8 text-center">
+    <div class="space-x-6 mb-4">
+      <a href="#" class="hover:underline">Home</a>
+      <a href="#" class="hover:underline">About</a>
+      <a href="#" class="hover:underline">Contact</a>
+      <a href="#" class="hover:underline">FAQs</a>
+    </div>
+    <p class="text-gray-400">© 2024 Astercart. All rights reserved.</p>
+  </footer>
+
+</div>
+  )
+}
+
+export default Test

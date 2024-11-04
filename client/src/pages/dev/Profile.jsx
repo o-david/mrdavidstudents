@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/authStore";
 import ProjectCard from "../../components/ProjectCard";
 import { useProjectStore } from "../../store/projectStore";
@@ -6,10 +6,12 @@ import { github, linkedin } from "../../assets";
 import { useNavigate } from "react-router-dom";
 import AddProject from "../../components/AddProject";
 import ProfileUpdateComponent from "../../components/ProfileUpdateComponent";
+import ImageEdit from "../../components/profileEditComponentts/ImageEdit";
 
 
 const Profile = ({dev}) => {
   const { user } = useAuthStore();
+  const [showEditImg, setShowEditImg] = useState(false)
   const navigate = useNavigate();
   const { projects, getProjects } = useProjectStore();
   const formatDate = (dateString, month=false) => {
@@ -31,6 +33,9 @@ const Profile = ({dev}) => {
   }, []);
   return (
     <div className="flex flex-col justify-between h-full gap-6 px-6 pb-6">
+      {
+        showEditImg && <ImageEdit />
+      }
       <AddProject/>
       <ProfileUpdateComponent/>
       {dev && <div className="rounded-full bg-sec3 absolute top-8 size-10 flex items-center justify-center font-black cursor-pointer text-white" onClick={ ()=>navigate('/')}>{`<`}</div>}
@@ -43,6 +48,7 @@ const Profile = ({dev}) => {
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="w-24 h-24 rounded-full mx-auto overflow-hidden flex items-center justify-center">
                 <img
+                  onClick={()=> setShowEditImg(true)}
                   className="w-full"
                   src={user?.profilePicture?user.profilePicture:"https://via.placeholder.com/150"}
                   alt="Profile"
@@ -181,7 +187,7 @@ const Profile = ({dev}) => {
         </div>
         <h2 className="text-xl font-bold border-b-2 pb-2">Projects</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.length>0? projects.slice(0, 8).map((project, index) => (
+          {projects?.length>0? projects.slice(0, 8).map((project, index) => (
             <ProjectCard key={index} project={project} />
           )):<p>No projects added yet</p>}
         </div>
@@ -191,3 +197,7 @@ const Profile = ({dev}) => {
 };
 
 export default Profile;
+
+
+
+

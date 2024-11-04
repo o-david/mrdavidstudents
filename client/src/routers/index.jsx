@@ -20,6 +20,7 @@ import Profile from "../pages/dev/Profile";
 import DevProfile from "../pages/DevProfile";
 import AllProjects from "../pages/AllProjects";
 import ProfileUpdateComponent from "../components/ProfileUpdateComponent";
+import Test from "../pages/Test";
 
 export const AppRouter = () => {
   function isloggedin() {
@@ -38,6 +39,7 @@ export const AppRouter = () => {
         { path: "allprojects", element: <AllProjects /> },
         { path: "update", element: <ProfileUpdateComponent /> },
         { path: "dev/:username", element: <DevProfile /> },
+        { path: "test", element: <Test /> },
       ],
     },
     {
