@@ -96,6 +96,17 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  socials: {
+    linkedIn: {
+      type: String,
+    },
+    twitter: {
+      type: String,
+    },
+    github: {
+      type: String,
+    },
+  },
   updatedAt: {
     type: Date,
     default: Date.now,

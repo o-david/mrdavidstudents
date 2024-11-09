@@ -287,8 +287,8 @@ export const googleCallback = async (req, res) => {
   }
 };
 
-export const updateUser = async (req, res) => {
-  const { profilePicture } = req.body;
+export const updateUser = async (req, res) => {  
+  const { profilePicture, firstName, lastName, currentRole, city, state, country, phoneNumber, username, linkedIn, github, twitter } = req.body; // Added fields
   try {
     const user = await User.findById(req.userId).select("-password");
     if (!user) {
@@ -296,10 +296,25 @@ export const updateUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "User not found" });
     }
-    user.profilePicture = profilePicture || user.profilePicture;
+
+    user.profilePicture = profilePicture === "clear" ? "" : profilePicture || user.profilePicture;
+    user.firstName = firstName || user.firstName; // Added
+    user.lastName = lastName || user.lastName; // Added
+    user.currentRole = currentRole || user.currentRole; // Added
+    user.address.city = city || user.address.city; // Added
+    user.address.state = state || user.address.state; // Added
+    user.address.country = country || user.address.country; // Added
+    user.phoneNumber = phoneNumber || user.phoneNumber; // Added
+    user.username = username || user.username; // Added
+    user.socials.linkedIn = linkedIn || user.socials.linkedIn; // Added
+    user.socials.github = github || user.socials.github; // Added
+    user.socials.twitter = twitter || user.socials.twitter; // Added
+
     await user.save();
     res.status(200).json({ message: "User updated" });
   } catch (error) {
+    console.log(error.message);
+    
     res.status(500).json({ message: error.message });
   }
 };
