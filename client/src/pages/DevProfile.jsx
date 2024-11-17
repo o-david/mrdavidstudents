@@ -138,7 +138,7 @@ const DevProfile = ({dev}) => {
                   user.certifications.map((cert, index) => {
                     return (
                       <span key={index} className="bg-gray-200 p-2 rounded-lg">
-                        {cert}
+                        {cert.name} {formatDate(cert.date, false)}
                       </span>
                     );
                   })
