@@ -288,7 +288,7 @@ export const googleCallback = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {  
-  const { profilePicture, firstName, lastName, currentRole, city, state, country, phoneNumber, username, linkedIn, github, twitter } = req.body; // Added fields
+  const { profilePicture, firstName, lastName, currentRole, city, state, country, phoneNumber, username, linkedIn, github, twitter, certifications } = req.body; // Added fields
   try {
     const user = await User.findById(req.userId).select("-password");
     if (!user) {
@@ -309,6 +309,7 @@ export const updateUser = async (req, res) => {
     user.socials.linkedIn = linkedIn || user.socials.linkedIn; // Added
     user.socials.github = github || user.socials.github; // Added
     user.socials.twitter = twitter || user.socials.twitter; // Added
+    user.certifications = certifications || user.certifications; // Added
 
     await user.save();
     res.status(200).json({ message: "User updated" });

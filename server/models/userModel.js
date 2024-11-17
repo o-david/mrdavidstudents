@@ -15,9 +15,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  certifications: {
-    type: [String],
-  },
+  certifications:[{
+    name: String,
+    issuer: String,
+    date: Date,
+    }],
   password: {
     type: String,
     required: true,

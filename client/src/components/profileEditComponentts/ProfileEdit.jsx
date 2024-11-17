@@ -10,17 +10,17 @@ const ProfileEdit = ({ setShowEditProfile }) => {
   const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    currentRole: user.currentRole || "",
-    city: user.address.city || "",
-    state: user.address.state || "",
-    country: user.address.country || "",
-    phoneNumber: user.phoneNumber || "",
-    username: user.username || "",
-    linkedIn: user.socials?.linkedIn || "",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    currentRole: user?.currentRole || "",
+    city: user?.address?.city || "",
+    state: user?.address?.state || "",
+    country: user?.address?.country || "",
+    phoneNumber: user?.phoneNumber || "",
+    username: user?.username || "",
+    linkedIn: user?.socials?.linkedIn || "",
     github: user?.socials?.github || "",
-    twitter: user.socials?.twitter || "",
+    twitter: user?.socials?.twitter || "",
   });
 
   const handleSubmit = async (e) => {
