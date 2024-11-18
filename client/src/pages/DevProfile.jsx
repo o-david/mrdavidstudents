@@ -97,20 +97,36 @@ const DevProfile = ({dev}) => {
 
               {/* Links to Profiles */}
               <div className="flex justify-center mt-4 gap-2 items-center">
-                <a
-                  href={user?.github?user.github:"https://github.com"}
-                  target="_blank"
-                  className="w-6 hover:scale-110 cursor-pointer"
-                >
-                  <img src={github} alt="Github Logo" className="w-full" />
-                </a>
-                <a
-                  href={user?.linkedin?user.linkedin:"https://linkedin.com"}
-                  target="_blank"
-                  className="w-8 hover:scale-110 cursor-pointer"
-                >
-                  <img src={linkedin} alt="LinkedIn Logo" className="w-full" />
-                </a>
+                {
+                  user?.socials?.github &&
+                  <a
+                    href={user.socials.github}
+                    target="_blank"
+                    className="w-6 hover:scale-110 cursor-pointer"
+                  >
+                    <img src={github} alt="Github Logo" className="w-full" />
+                  </a>
+                }
+                {
+                  user?.socials?.linkedIn &&
+                  <a
+                    href={user.socials.linkedIn}
+                    target="_blank"
+                    className="w-6 hover:scale-110 cursor-pointer"
+                  >
+                    <img src={linkedin} alt="Github Logo" className="w-full" />
+                  </a>
+                }
+                {
+                  user?.socials?.twitter &&
+                  <a
+                    href={user.socials.twitter}
+                    target="_blank"
+                    className="w-6 hover:scale-110 cursor-pointer"
+                  >
+                    <img src={x} alt="Github Logo" className="w-full" />
+                  </a>
+                }
               </div>
             </div>
 

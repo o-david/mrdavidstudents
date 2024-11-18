@@ -130,7 +130,7 @@ const Profile = ({ dev }) => {
               {/* Links to Profiles */}
               <div className="flex justify-center mt-4 gap-2 items-center">
                 {
-                  user && user?.socials?.github &&
+                  user?.socials?.github &&
                   <a
                     href={user.socials.github}
                     target="_blank"
